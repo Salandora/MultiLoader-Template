@@ -2,6 +2,7 @@ plugins {
     id 'multiloader-loader'
     id 'fabric-loom'
 }
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.layered {
@@ -13,7 +14,8 @@ dependencies {
 }
 
 loom {
-    def aw = project(':common').file("src/main/resources/${mod_id}.accesswidener")
+    def path = "${project.parent.path}:common" // Get the correct path, even if we are in a multiproject setup
+    def aw = project(path).file("src/main/resources/${mod_id}.accesswidener")
     if (aw.exists()) {
         accessWidenerPath.set(aw)
     }

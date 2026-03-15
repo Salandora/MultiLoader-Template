@@ -10,6 +10,12 @@ neoForge {
     if (at.exists()) {
         accessTransformers.from(at.absolutePath)
     }
+    // Automatically enable neoforge interface injection if the file exists
+    def ii = file('src/main/resources/interfaces.json')
+    if (ii.exists()) {
+        interfaceInjectionData.from(ii.absolutePath)
+    }
+    // Parchment
     parchment {
         minecraftVersion = parchment_minecraft
         mappingsVersion = parchment_version

@@ -5,11 +5,18 @@ plugins {
 
 neoForge {
     version = neoforge_version
+    def path = "${project.parent.path}:common" // Get the correct path, even if we are in a multiproject setup
     // Automatically enable neoforge AccessTransformers if the file exists
-    def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
+    def at = project(path).file('src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
         accessTransformers.from(at.absolutePath)
     }
+    // Automatically enable neoforge interface injection if the file exists
+    def ii = project(path).file('src/main/resources/interfaces.json')
+    if (ii.exists()) {
+        interfaceInjectionData.from(ii.absolutePath)
+    }
+    // Parchment
     parchment {
         minecraftVersion = parchment_minecraft
         mappingsVersion = parchment_version
