@@ -52,20 +52,6 @@ dependencies {
     implementation "com.google.code.findbugs:jsr305:3.0.1"
 }
 
-// Declare capabilities on the outgoing configurations.
-// Read more about capabilities here: https://docs.gradle.org/current/userguide/component_capabilities.html#sec:declaring-additional-capabilities-for-a-local-component
-['apiElements', 'runtimeElements', 'sourcesElements', 'javadocElements'].each { variant ->
-    configurations."$variant".outgoing {
-        capability("$project.group:${project.name}:$project.version")
-        capability("$project.group:${base.archivesName.get()}:$project.version")
-        capability("$project.group:$project.mod_id-${project.name}-${project.minecraft_version}:$project.version")
-        capability("$project.group:$project.mod_id:$project.version")
-    }
-    publishing.publications.configureEach {
-        suppressPomMetadataWarningsFor(variant)
-    }
-}
-
 sourcesJar {
     from(rootProject.file('LICENSE')) {
         rename { "${it}_${project.mod_name}" }
